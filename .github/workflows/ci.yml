@@ -1,0 +1,12 @@
+# PR이나 push가 올라오면 GitHub가 자동으로 테스트를 돌린다.
+# LLM을 호출하지 않는 테스트(tests/unit)만 돌린다. 키가 필요 없고 돈도 안 든다.
+name: ci
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync
+      - run: uv run pytest -q tests/unit
